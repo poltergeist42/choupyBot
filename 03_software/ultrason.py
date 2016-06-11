@@ -1,30 +1,31 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-###
-#   Nom du fichier  : ultrason.py
-#   Autheur         : Poltergeist42
-#   Version         : 2016.05.28
-###
+"""
+   :Nom du fichier:     ultrason.py
+   :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
+   :Version:            2016.06.07
 
-###
-#   Licence         : CC-BY-NC-SA
-#   Liens           : https://creativecommons.org/licenses/by-nc-sa/4.0/
-###
+----
 
-###
-#   [ lexique ]
-#
-#   v_              : variable
-#   l_              : list
-#   t_              : tuple
-#   d_              : dictionnaire
-#   f_              : fonction
-#   C_              : Class
-#   i_              : Instance
-#   m_              : Module
-###
+   :Licence:            CC-BY-NC-SA
+   :Liens:              https://creativecommons.org/licenses/by-nc-sa/4.0/
 
+----
+
+
+lexique
+-------
+
+   :v_:                 variable
+   :l_:                 list
+   :t_:                 tuple
+   :d_:                 dictionnaire
+   :f_:                 fonction
+   :C_:                 Class
+   :i_:                 Instance
+   :m_:                 Module
+"""
 #################### Taille maximum des commentaires (80 caracteres)######################
 
 import RPi.GPIO as GPIO
@@ -33,23 +34,37 @@ import time
 class C_ultrasonSensor(object) :
     """ Class permettant d'utiliser le capteur ultra son 
     
-    - Type de capteur           : HC-SR04
-    - Trig                      : En Sortie (hautparleur)
-                                        # 1 impulsion est egale a 10us (0.00001)
-    - Echo                      : En Entree (Micro)
-                                        # Attention les entrée du RPi etant en 3.3v,il
-                                        # faut faire un pont diviseur entre la broche
-                                        # "Echo" et le GND pour pouvoir se brancher
-                                        # sur le RPi
-                                        
-    - Distance                  : D = 170 x time
-                                        # 170 correspond a la vitesse du son / 2 (340/2)
+    :Type de capteur: HC-SR04
+    
+    Trig
+        En Sortie (hautparleur)
+            # 1 impulsion est egale a 10us (0.00001)
+                    
+    Echo
+        En Entree (Micro)
+        
+            # Attention les entrees du RPi etant en 3.3v,
+            il faut faire un pont diviseur entre la broche
+            "Echo" et le GND pour pouvoir se brancher
+            sur le RPi
+                
+    Vitesse du son
+        Le son se déplace à une vitesse d'environ 340 m/s
+            
+            
+                
+    Distance
+        D = 170 x time
+            # 170 correspond a la vitesse du son / 2 (340/2).
+            On divise par 2 car seule la distance en l'obstacle et le mur nous intéresse
+            et non la distance total parcourue par l'onde radio.
     - source : https://www.youtube.com/watch?v=xACy8l3LsXI
     """
     def init(self) :
         """ variables globales """
         self.v_trig = 0
         self.v_echo = 0
+        self.v_timeSpeed = 170
         
     def ultraInit(self, v_gpioTrig = 7, v_gpioEcho = 12) :
         """ initialisation des broches GPIO en entree (Echo) et en sortie (Trig) """
@@ -62,6 +77,23 @@ class C_ultrasonSensor(object) :
         
     def ultraMesure(self) :
         """ mersure de la distance entre le capteur et l'obstacle """
+        
+        # Emission de l'onde radio
         time.sleep(0.1)
+        GPIO.output(self.v_trig, 1)
+        time.sleep(0.00001)
+        GPIO.output(self.v_trig, 1)
         
+        # reception de l'echo radio
+        while GPIO.input(self.v_echo == 0) :
+            pass
+            
+        v_start = timte.time()
         
+        while GPIO.input(self.v_echo == 1)
+            pass
+            
+        v_stop = time.time()
+        
+        return (stop - start) * self.v_timeSpeed
+ 
