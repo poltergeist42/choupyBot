@@ -70,65 +70,13 @@ lexique
 import RPi.GPIO as GPIO
 import time
 
+from math import pi
+
 
 class C_MoteurPap(object):
-    """
-        Class permettant d'instancier un objet 'C_MoteurPap'
+    """ Class permettant d'instancier un objet 'C_MoteurPap' """
     
-            [ liste des methodes ]
-
-            f_gpioInit(v_gpioA, v_gpioB, v_gpioC, v_gpioD):
-                ""
-                    Methode permettant de selectionner et d'activer les 4 ports du RPi
-                    necessaires au fonctionnement du moteur Pas a Pas.
-                    par défaut, les ports sont configures de la facon suivante :
-                        v_gpioA = GPIO17
-                        v_gpioB = GPIO18
-                        v_gpioC = GPIO27
-                        v_gpioD = GPIO22
-                    
-                    Ces ports doivent etre change si il y a plus d'un moteur 
-                    sur le montage
-                
-                    Cette methode est obligatoire est doit etre appellee lors 
-                    de la creation de chaque nouvelle instance de l'objet.
-                ""
-
-            f_gpioDestructor():
-                ""
-                    Methode permettant de fermer proprement la gestion des GPIO du Rpi
-                    
-                    Cette methode doit etre appellee a la fin de l'utilisation
-                    des broches GPIO (avant de quiter le programe).
-                ""
-
-            f_moveDeg(v_deg):
-            ""
-                Methode permettant d'effectuer une rotation egale 
-                a la valeur fournie degres
-            ""
-
-            f_moveStep(v_step):
-            ""
-                Methode permettant d'effectuer une rotation egale
-                a la valeur fournie nombre de pas (en sortie d'arbre)
-            ""
-
-            f_convertDegToStep(v_degToStep):
-            ""
-                Methode permettant de convertir en nombre de Pas
-                une valeur entree en degres
-            ""
-
-            f_convertStepToDeg(v_stepToDeg):
-            ""
-                Methode permettant de convertir en degres
-                une valeur entree nombre de Pas
-            ""
-            
-    """
-    
-    def __init__(self, v_rotationInit = "horaire") :
+    def __init__(self, v_rotationInit = "horaire", v_rayonInit = 1) :
         """
             Déclaration et intialisation des variables
         """
@@ -142,6 +90,9 @@ class C_MoteurPap(object):
         self.v_refAngle = 0.087890625
         
         self.t_broches = [0, 0, 0, 0]
+        
+        self.v_rayon = v_rayonInit
+        self.v_perimetre = 2 * pi * self.v_rayon
 
         # Séquense de sortie
         self.v_ndp = 8
@@ -210,9 +161,13 @@ class C_MoteurPap(object):
         # Recuperation d'une valeur donnee en nombre de pas en sortie d'arbre
         self.v_dest =  v_step
         # print("dbgMsg[04]: self.v_dest [ + ] : ", self.v_dest)
-        self.f_move(self.v_dest, v_deg)
+        self.f_move(self.v_dest, v_step)
 
-                
+    def f_moveCm(self, v_cm) :
+        """ effectue une rotation egale a une distance en centimetre """
+        self.v_dest = self.f_convertCmToStep(v_cm)
+        self.f_move(self.v_dest, v_cm)
+                       
     def f_move(self, self.v_dest, v_step) :
         """ Factorisation de la sequence de mouvement des PAP """
         
@@ -237,9 +192,7 @@ class C_MoteurPap(object):
                 elif v_step == -1 : self.v_compteurDePas +=1
             
                 if (self.v_compteurDePas == self.v_ndp) : self.v_compteurDePas = 0
-                if (self.v_compteurDePas < 0) : self.v_compteurDePas = self.v_ndp-1
-            
-        
+                if (self.v_compteurDePas < 0) : self.v_compteurDePas = self.v_ndp-1       
                 
     def f_convertDegToStep(self, v_degToStep):
         """
@@ -253,8 +206,73 @@ class C_MoteurPap(object):
             Methode permettant de convertir en degres
             une valeur entree nombre de Pas
         """
-        return int(v_stepToDeg * self.v_refAngle)
+        return v_stepToDeg * self.v_refAngle
         
+    def f_convertCmToDeg(self, v_cmToDeg) :
+        """
+            Methode permettant de convertir en centimetre
+            une valeur donnee en degres
+            
+            :Rappel:
+                Calcul du perimetre d'un cercle
+                    ::
+                    
+                        2 x pi x R
+                
+                +-----------------+------------------+
+                |     Degres      |   centimetres    |
+                +=================+==================+
+                |      360        |      2piR        |
+                +-----------------+------------------+
+                |     360/(2piR)  |        1         |
+                +-----------------+------------------+
+                | (x360) / (2piR) |        x         |
+                +-----------------+------------------+
+                |        1        | (2piR) / (x360)  |
+                +-----------------+------------------+
+                |        x        | (x2piR) / (x360) |
+                +-----------------+------------------+
+        """
+        return (v_cmToDeg * 360) / self.v_perimetre
+        
+    def f_convertDegToCm(self, v_degToCm) :
+        """
+            Methode permettant de convertir en degres
+            une valeur donnee en centimetre
+            
+            :Rappel:
+                Calcul du perimetre d'un cercle
+                    ::
+                    
+                        2 x pi x R
+                
+                +-----------------+------------------+
+                |     Degres      |   centimetres    |
+                +=================+==================+
+                |      360        |      2piR        |
+                +-----------------+------------------+
+                |     360/(2piR)  |        1         |
+                +-----------------+------------------+
+                | (x360) / (2piR) |        x         |
+                +-----------------+------------------+
+                |        1        | (2piR) / (x360)  |
+                +-----------------+------------------+
+                |        x        | (x2piR) / (x360) |
+                +-----------------+------------------+
+        """
+        return (v_degToCm * self.v_perimetre) / 360)
+    
+    def f_convertCmToStep(self, v_cmToStep) :
+        """ convertit une valeur en centimetre
+            en l'equivalent en nombres de pas
+        """
+        return (4096 * v_cmToStep) / self.perimetre
+        
+    def f_convertStepToCm(self, v_stepToCm) :
+        """ convertit un nombre de pas en une distance en centimetre """
+        return (v_stepToCm * self.perimetre) / 4096
+        
+       
     def f_sensDeRotation(self) :
         """
             identifi le sens de rotation attendu par l'utilisateur
