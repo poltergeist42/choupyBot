@@ -67,7 +67,12 @@ lexique
                 soit 1/64 de tour en sortie d'arbre.
 """
 
-import RPi.GPIO as GPIO
+try :
+    import RPi.GPIO as GPIO
+    
+except ImportError :
+    print("module 'RPi' non charge")
+    
 import time
 
 from math import pi
@@ -106,6 +111,18 @@ class C_MoteurPap(object):
         self.t_phase[6] = [0,0,0,1]
         self.t_phase[7] = [1,0,0,1]
         
+    def __del__(self) :
+        """destructor
+        
+            il faut utilise :
+            ::
+            
+                del [nom_de_l'_instance]
+        """
+        self.f_gpioDestructor()
+        c_className = self.__class__.__name__
+        print("\n\t\tL'instance de la class {} est terminee".format(c_className))
+        
     def f_gpioInit(self, v_gpioA=17, v_gpioB=18, v_gpioC=27, v_gpioD=22):
         """
             Methode permettant de selectionner et d'activer les 4 ports du RPi
@@ -122,15 +139,19 @@ class C_MoteurPap(object):
             de chaque nouvelle instance de l'objet.
         """
         # configuration du mode du GPIO
-        GPIO.setmode(GPIO.BCM)
+        try :
+            GPIO.setmode(GPIO.BCM)
 
-        # Déclaration des broches : GPIO17, GPIO18, GPIO27, GPIO22
-        self.t_broches = [v_gpioA, v_gpioB, v_gpioC, v_gpioD]
+            # Déclaration des broches : GPIO17, GPIO18, GPIO27, GPIO22
+            self.t_broches = [v_gpioA, v_gpioB, v_gpioC, v_gpioD]
 
-        # Configuration des broches en sortie et initialisation à l'état bas
-        for v_sortieInit in self.t_broches :
-            GPIO.setup(v_sortieInit, GPIO.OUT)
-            GPIO.output(v_sortieInit, False)
+            # Configuration des broches en sortie et initialisation à l'état bas
+            for v_sortieInit in self.t_broches :
+                GPIO.setup(v_sortieInit, GPIO.OUT)
+                GPIO.output(v_sortieInit, False)
+        except NameError :
+            print("GPIO error : f_gpioInit")
+
 
     def f_gpioDestructor(self):
         """
@@ -139,8 +160,11 @@ class C_MoteurPap(object):
             Cette methode doit etre appellee a la fin de l'utilisation
             des broches GPIO (avant de quiter le programe).
         """
-
-        GPIO.cleanup()
+        try :
+            GPIO.cleanup()
+            
+        except NameError :
+            print("GPIO error : f_gpioDestructor")
 
     def f_moveDeg(self, v_deg):
         """
@@ -151,6 +175,7 @@ class C_MoteurPap(object):
         # de cette valeur en nombre de pas en sortie d'arbre
         self.v_dest = self.f_convertDegToStep( v_deg )
         # print("dbgMsg[01]: self.v_dest [ + ] : ", self.v_dest)
+        self.f_sensDeRotation()
         self.f_move(self.v_dest, v_deg)
 
     def f_moveStep(self, v_step):
@@ -161,33 +186,41 @@ class C_MoteurPap(object):
         # Recuperation d'une valeur donnee en nombre de pas en sortie d'arbre
         self.v_dest =  v_step
         # print("dbgMsg[04]: self.v_dest [ + ] : ", self.v_dest)
+        self.f_sensDeRotation()
         self.f_move(self.v_dest, v_step)
 
     def f_moveCm(self, v_cm) :
         """ effectue une rotation egale a une distance en centimetre """
         self.v_dest = self.f_convertCmToStep(v_cm)
+        self.f_sensDeRotation()
         self.f_move(self.v_dest, v_cm)
                        
-    def f_move(self, self.v_dest, v_step) :
+    def f_move(self, v_destMove, v_step) :
         """ Factorisation de la sequence de mouvement des PAP """
         
-        if self.v_dest > 0 :
-            self.v_dest+= 1
+        if v_destMove > 0 :
+            v_destMove+= 1
             v_step = 1
         else :
-            self.v_dest -=1
+            v_destMove -=1
             v_step = -1
         # print("dbgMsg[04']: self.v_dest [ - ] : ", self.v_dest)
         
-        for v_pas in range(0, self.v_dest, v_step):
+        for v_pas in range(0, v_destMove, v_step):
                 # print("dbgMsg[05]: v_pas : ", v_pas)
                 for v_sortie in range(4):
                     v_sortieN = self.t_broches[v_sortie]
-                    if self.t_phase[self.v_compteurDePas][v_sortie] !=0 :
-                        # print("dbgMsg[06]: t_phase %i Activation v_sortie %i" %(self.v_compteurDePas, v_sortieN))
-                        GPIO.output(v_sortieN, True)
-                    else :
-                        GPIO.output(v_sortieN, False)
+                    
+                    try :
+                        if self.t_phase[self.v_compteurDePas][v_sortie] !=0 :
+                            # print("dbgMsg[06]: t_phase %i Activation v_sortie %i" %(self.v_compteurDePas, v_sortieN))
+                            GPIO.output(v_sortieN, True)
+                        else :
+                            GPIO.output(v_sortieN, False)
+                    except NameError :
+                        print("GPIO error : f_moveStep\n")
+                        print("dbgMsg[06]: t_phase %i Activation v_sortie %i" %(self.v_compteurDePas, v_sortieN))
+                        
                 if v_step == 1 : self.v_compteurDePas -= 1
                 elif v_step == -1 : self.v_compteurDePas +=1
             
@@ -260,17 +293,17 @@ class C_MoteurPap(object):
                 |        x        | (x2piR) / (x360) |
                 +-----------------+------------------+
         """
-        return (v_degToCm * self.v_perimetre) / 360)
+        return (v_degToCm * self.v_perimetre) / 360
     
     def f_convertCmToStep(self, v_cmToStep) :
         """ convertit une valeur en centimetre
             en l'equivalent en nombres de pas
         """
-        return (4096 * v_cmToStep) / self.perimetre
+        return int((4096 * v_cmToStep) / self.v_perimetre)
         
     def f_convertStepToCm(self, v_stepToCm) :
         """ convertit un nombre de pas en une distance en centimetre """
-        return (v_stepToCm * self.perimetre) / 4096
+        return (v_stepToCm * self.v_perimetre) / 4096
         
        
     def f_sensDeRotation(self) :
@@ -278,5 +311,59 @@ class C_MoteurPap(object):
             identifi le sens de rotation attendu par l'utilisateur
             et l'affecter au PAP
         """
-        if self.v_rotation == antihorraire :
+        if self.v_rotation == "antihorraire" :
             self.v_dest *= -1
+
+           
+def main() :
+    #######################
+    # Instance par defaut #
+    #######################
+    print("Instance par defaut")
+    i_classTest = C_MoteurPap()
+
+    input("f_gpioInit : ")
+    i_classTest.f_gpioInit()
+        
+    input("f_moveDeg : ")
+    i_classTest.f_moveDeg(30)
+    
+    input("f_moveStep : ")
+    i_classTest.f_moveStep(256)
+    
+    input("fin de l'instance")
+    del i_classTest
+    
+    #########################
+    # Instance Anti-horaire #
+    #########################
+    print("Instance Anti-horaire")
+    i_classTest = C_MoteurPap(v_rotationInit = "antihoraire")
+    
+    input("f_gpioInit")
+    i_classTest.f_gpioInit()
+        
+    input("f_moveDeg")
+    i_classTest.f_moveDeg(30)
+    
+    input("f_moveStep")
+    i_classTest.f_moveStep(256)
+    
+    input("fin de l'instance")
+    del i_classTest
+    
+    ###############
+    # Instance cm #
+    ###############
+    print("Instance Centimetre")
+    i_classTest = C_MoteurPap(v_rayonInit = 3)
+    
+    input("f_moveCm")
+    i_classTest.f_moveCm(4)
+
+    input("fin de l'instance")
+    del i_classTest
+    
+          
+if __name__ == '__main__':
+    main()

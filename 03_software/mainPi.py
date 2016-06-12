@@ -64,7 +64,7 @@ def main() :
     """ Fonction principal """
     i_choupy = C_choupyBot()
     i_choupy.f_papInit()
-    ultrason.ultraInit()
+    ultrason.ultraInit(v_gpioEcho = 5)
     
     
 if __name__ == '__main__':
