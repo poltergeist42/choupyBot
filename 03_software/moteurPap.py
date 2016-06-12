@@ -200,40 +200,22 @@ class C_MoteurPap(object):
         # de cette valeur en nombre de pas en sortie d'arbre
         self.v_dest = self.f_convertDegToStep( v_deg )
         # print("dbgMsg[01]: self.v_dest [ + ] : ", self.v_dest)
-        if self.v_dest > 0 :
-            self.v_dest+= 1
-            v_step = 1
-        else :
-            self.v_dest -=1
-            v_step = -1
-        # print("dbgMsg[01']: self.v_dest [ - ] : ", self.v_dest)
-        
-        for v_pas in range(0, self.v_dest, v_step):
-                # print("dbgMsg[02]: v_pas : ", v_pas)
-                for v_sortie in range(4):
-                    v_sortieN = self.t_broches[v_sortie]
-                    if self.t_phase[self.v_compteurDePas][v_sortie] !=0 :
-                        # print("dbgMsg[03]: t_phase %i Activation v_sortie %i" %(self.v_compteurDePas, v_sortieN))
-                        GPIO.output(v_sortieN, True)
-                    else :
-                        GPIO.output(v_sortieN, False)
-                if v_step == 1 : self.v_compteurDePas -= 1
-                elif v_step == -1 : self.v_compteurDePas +=1
-            
-                if (self.v_compteurDePas == self.v_ndp) : self.v_compteurDePas = 0
-                if (self.v_compteurDePas < 0) : self.v_compteurDePas = self.v_ndp-1
-            
-                time.sleep(self.v_tempDePause)
+        self.f_move(self.v_dest, v_deg)
 
     def f_moveStep(self, v_step):
         """
             Methode permettant d'effectuer une rotation egale
             a la valeur fournie nombre de pas (en sortie d'arbre)
         """
-        
         # Recuperation d'une valeur donnee en nombre de pas en sortie d'arbre
         self.v_dest =  v_step
         # print("dbgMsg[04]: self.v_dest [ + ] : ", self.v_dest)
+        self.f_move(self.v_dest, v_deg)
+
+                
+    def f_move(self, self.v_dest, v_step) :
+        """ Factorisation de la sequence de mouvement des PAP """
+        
         if self.v_dest > 0 :
             self.v_dest+= 1
             v_step = 1
@@ -257,8 +239,8 @@ class C_MoteurPap(object):
                 if (self.v_compteurDePas == self.v_ndp) : self.v_compteurDePas = 0
                 if (self.v_compteurDePas < 0) : self.v_compteurDePas = self.v_ndp-1
             
-                time.sleep(self.v_tempDePause)
-
+        
+                
     def f_convertDegToStep(self, v_degToStep):
         """
             Methode permettant de convertir en nombre de Pas
