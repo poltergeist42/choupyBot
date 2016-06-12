@@ -5,7 +5,7 @@
 """
    :Nom du fichier:     choupyBot.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160611
+   :Version:            20160612
 
 ----
 
@@ -13,7 +13,6 @@
    :Liens:              https://creativecommons.org/licenses/by-nc-sa/4.0/
 
 ----
-
 
 lexique
 -------
@@ -45,6 +44,18 @@ class C_choupyBot(object) :
                                         # Initialisation des GPIO de chacun des moteur.
                                         # i_PapGauche est initialiser avec les valeur par defaut
                                         # (v_gpioA=17, v_gpioB=18, v_gpioC=27, v_gpioD=22)
+                                        
+    def avance(self) :
+        """ avance tout droit """
+        
+    def recul(self) :
+        """ reculler tout droit """
+        
+    def gauche(self) :
+        """ tourner a gauche """
+        
+    def droite(self) :
+        """ Tourner a droite """
 
 def main() :
     """ Fonction principal """

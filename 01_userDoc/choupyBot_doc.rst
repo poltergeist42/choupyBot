@@ -9,7 +9,7 @@ choupyBot
 
 ------------------------------------------------------------------------------------------
 
-    :Version:           20160611
+    :Version:           20160612
 
 ------------------------------------------------------------------------------------------
 
@@ -31,11 +31,18 @@ Descriptif détaillé
 
     #. Liste des équipements
         * Un capteur ultrason
-            # Il vat permetre la détection des obstables. Un potentiomettre sera associé
+        
+            Il vat permetre la détection des obstables. Un potentiomettre sera associé
             à ce capteur pour permettre de modifier la distance de sécurité avant
             évitement des obstacles.
+            
+        * Un Servo moteur
+        
+            pour manipuller le capteur ultrason (Pas obligatoire).
+            
         * Des emeteurs recepteurs infrarouge
-            # Ils vont permettre de detecter les bords de table pour prévenir des chutes.
+        
+            Ils vont permettre de detecter les bords de table pour prévenir des chutes.
             Ils devront également être capable de suivre une ligne tracé au sols.
 
 ------------------------------------------------------------------------------------------
