@@ -1,30 +1,30 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-###
-#   Nom du fichier  : moteurPap.py
-#   Autheur         : Poltergeist42
-#   Version         : 2016.05.28
-###
+"""
+   :Nom du fichier:     moteurPap.py
+   :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
+   :Version:            20160612
 
-###
-#   Licence         : CC-BY-NC-SA
-#   Liens           : https://creativecommons.org/licenses/by-nc-sa/4.0/
-###
+----
 
-###
-#   [ lexique ]
-#
-#   v_              : variable
-#   l_              : list
-#   t_              : tuple
-#   d_              : dictionnaire
-#   f_              : fonction
-#   C_              : Class
-#   i_              : Instance
-#   m_              : Module
-###
+   :Licence:            CC-BY-NC-SA
+   :Liens:              https://creativecommons.org/licenses/by-nc-sa/4.0/
 
+----
+
+lexique
+-------
+
+   :v_:                 variable
+   :l_:                 list
+   :t_:                 tuple
+   :d_:                 dictionnaire
+   :f_:                 fonction
+   :C_:                 Class
+   :i_:                 Instance
+   :m_:                 Module
+"""
 #################### Taille maximum des commentaires (80 caracteres)######################
 
 
@@ -128,11 +128,13 @@ class C_MoteurPap(object):
             
     """
     
-    def __init__(self) :
+    def __init__(self, v_rotationInit = "horaire") :
         """
             Déclaration et intialisation des variables
         """
         # declaration des variables
+        self.v_rotation = v_rotationInit.lower()
+        self.v_dest = 1
         self.v_compteurDePas = 0
         self.v_tempDePause = 0.005
         self.v_nbPas = 0
@@ -196,17 +198,17 @@ class C_MoteurPap(object):
         """
         # Récupération d'une valeur donnée en degrès puis convertion
         # de cette valeur en nombre de pas en sortie d'arbre
-        v_dest = self.f_convertDegToStep( v_deg )
-        # print("dbgMsg[01]: v_dest [ + ] : ", v_dest)
-        if v_dest > 0 :
-            v_dest+= 1
+        self.v_dest = self.f_convertDegToStep( v_deg )
+        # print("dbgMsg[01]: self.v_dest [ + ] : ", self.v_dest)
+        if self.v_dest > 0 :
+            self.v_dest+= 1
             v_step = 1
         else :
-            v_dest -=1
+            self.v_dest -=1
             v_step = -1
-        # print("dbgMsg[01']: v_dest [ - ] : ", v_dest)
+        # print("dbgMsg[01']: self.v_dest [ - ] : ", self.v_dest)
         
-        for v_pas in range(0, v_dest, v_step):
+        for v_pas in range(0, self.v_dest, v_step):
                 # print("dbgMsg[02]: v_pas : ", v_pas)
                 for v_sortie in range(4):
                     v_sortieN = self.t_broches[v_sortie]
@@ -230,17 +232,17 @@ class C_MoteurPap(object):
         """
         
         # Recuperation d'une valeur donnee en nombre de pas en sortie d'arbre
-        v_dest =  v_step
-        # print("dbgMsg[04]: v_dest [ + ] : ", v_dest)
-        if v_dest > 0 :
-            v_dest+= 1
+        self.v_dest =  v_step
+        # print("dbgMsg[04]: self.v_dest [ + ] : ", self.v_dest)
+        if self.v_dest > 0 :
+            self.v_dest+= 1
             v_step = 1
         else :
-            v_dest -=1
+            self.v_dest -=1
             v_step = -1
-        # print("dbgMsg[04']: v_dest [ - ] : ", v_dest)
+        # print("dbgMsg[04']: self.v_dest [ - ] : ", self.v_dest)
         
-        for v_pas in range(0, v_dest, v_step):
+        for v_pas in range(0, self.v_dest, v_step):
                 # print("dbgMsg[05]: v_pas : ", v_pas)
                 for v_sortie in range(4):
                     v_sortieN = self.t_broches[v_sortie]
@@ -270,3 +272,11 @@ class C_MoteurPap(object):
             une valeur entree nombre de Pas
         """
         return int(v_stepToDeg * self.v_refAngle)
+        
+    def f_sensDeRotation(self) :
+        """
+            identifi le sens de rotation attendu par l'utilisateur
+            et l'affecter au PAP
+        """
+        if self.v_rotation == antihorraire :
+            self.v_dest *= -1
