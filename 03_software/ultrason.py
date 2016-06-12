@@ -4,7 +4,7 @@
 """
    :Nom du fichier:     ultrason.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            2016.06.07
+   :Version:            20160611
 
 ----
 
@@ -66,7 +66,33 @@ class C_ultrasonSensor(object) :
         self.v_echo = 0
         self.v_timeSpeed = 170
         
-    def ultraInit(self, v_gpioTrig = 7, v_gpioEcho = 12) :
+    def __del__(self) :
+        """destructor
+        
+            il faut utilise :
+            ::
+            
+                del [nom_de_l'_instance]
+        """
+        self.f_gpioDestructor()
+        v_className = self.__class__.__name__
+        print("\n\t\tL'instance de la class {} est terminee".format(c_className))
+        
+    def f_gpioDestructor(self):
+        """
+            Methode permettant de fermer proprement la gestion des GPIO du Rpi
+            
+            Cette methode doit etre appellee a la fin de l'utilisation
+            des broches GPIO (avant de quiter le programe).
+        """
+        try :
+            GPIO.cleanup()
+            
+        except NameError :
+            print("GPIO error : f_gpioDestructor")
+
+        
+    def f_ultraInit(self, v_gpioTrig = 7, v_gpioEcho = 12) :
         """ initialisation des broches GPIO en entree (Echo) et en sortie (Trig) """
         GPIO.setmode(GPIO.BCM)
         self.v_trig = v_gpioTrig
@@ -75,7 +101,7 @@ class C_ultrasonSensor(object) :
         GPIO.setup(self.v_echo, GPIO.IN)
         GPIO.setup(self.v_trig, GPIO.OUT)
         
-    def ultraMesure(self) :
+    def f_ultraMesure(self) :
         """ mersure de la distance entre le capteur et l'obstacle """
         
         # Emission de l'onde radio
@@ -97,3 +123,21 @@ class C_ultrasonSensor(object) :
         
         return (stop - start) * self.v_timeSpeed
  
+ def main() :
+    """ Fonction principal """
+    #######################
+    # Instance par defaut #
+    #######################
+    print("Instance par defaut")
+    i_testClass = C_ultrasonSensor
+    
+    input("f_ultraInit : ")
+    i_testClass.f_ultraInit()
+    
+    input("f_ultraMesure : )
+    i_testClass.f_ultraMesure()
+    
+    del i_testClass
+ 
+ if __name__ == '__main__':
+    main()

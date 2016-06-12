@@ -34,9 +34,21 @@ class C_choupyBot(object) :
     def __init__(self):
         """ variables globales """
         
+    def __del__(self) :
+        """destructor
+        
+            il faut utilise :
+            ::
+            
+                del [nom_de_l'_instance]
+        """
+        v_className = self.__class__.__name__
+        print("\n\t\tL'instance de la class {} est terminee".format(c_className))
+
+        
     def f_papInit(self):
         """ initialisation des 2 moteur pas a pas """
-        self.i_PapGauche = C_MoteurPap(v_rotationInit = antihorraire)
+        self.i_PapGauche = C_MoteurPap(v_rotationInit = "antihorraire", v_rayonInit = 3)
                                         # Le PAP Gauche doit tourner en sens inverse du droit 
                                         # pour que le robot puisse aller tout droit
         self.i_PapGauche.f_gpioInit(v_gpioA=06, v_gpioB=12, v_gpioC=13, v_gpioD=19)
@@ -44,7 +56,7 @@ class C_choupyBot(object) :
                                         # i_PapGauche est initialiser avec les valeur par defaut
                                         # (v_gpioA=17, v_gpioB=18, v_gpioC=27, v_gpioD=22)
         
-        self.i_PapDroit  = C_MoteurPap()
+        self.i_PapDroit  = C_MoteurPap(v_rayonInit = 3)
         self.i_PapDroit.f_gpioInit()
 
                                         
@@ -64,7 +76,7 @@ def main() :
     """ Fonction principal """
     i_choupy = C_choupyBot()
     i_choupy.f_papInit()
-    ultrason.ultraInit(v_gpioEcho = 5)
+    ultrason.f_ultraInit(v_gpioEcho = 5)
     
     
 if __name__ == '__main__':

@@ -120,7 +120,7 @@ class C_MoteurPap(object):
                 del [nom_de_l'_instance]
         """
         self.f_gpioDestructor()
-        c_className = self.__class__.__name__
+        v_className = self.__class__.__name__
         print("\n\t\tL'instance de la class {} est terminee".format(c_className))
         
     def f_gpioInit(self, v_gpioA=17, v_gpioB=18, v_gpioC=27, v_gpioD=22):
@@ -320,49 +320,49 @@ def main() :
     # Instance par defaut #
     #######################
     print("Instance par defaut")
-    i_classTest = C_MoteurPap()
+    i_testClass = C_MoteurPap()
 
     input("f_gpioInit : ")
-    i_classTest.f_gpioInit()
+    i_testClass.f_gpioInit()
         
     input("f_moveDeg : ")
-    i_classTest.f_moveDeg(30)
+    i_testClass.f_moveDeg(30)
     
     input("f_moveStep : ")
-    i_classTest.f_moveStep(256)
+    i_testClass.f_moveStep(256)
     
     input("fin de l'instance")
-    del i_classTest
+    del i_testClass
     
     #########################
     # Instance Anti-horaire #
     #########################
     print("Instance Anti-horaire")
-    i_classTest = C_MoteurPap(v_rotationInit = "antihoraire")
+    i_testClass = C_MoteurPap(v_rotationInit = "antihoraire")
     
     input("f_gpioInit")
-    i_classTest.f_gpioInit()
+    i_testClass.f_gpioInit()
         
     input("f_moveDeg")
-    i_classTest.f_moveDeg(30)
+    i_testClass.f_moveDeg(30)
     
     input("f_moveStep")
-    i_classTest.f_moveStep(256)
+    i_testClass.f_moveStep(256)
     
     input("fin de l'instance")
-    del i_classTest
+    del i_testClass
     
     ###############
     # Instance cm #
     ###############
     print("Instance Centimetre")
-    i_classTest = C_MoteurPap(v_rayonInit = 3)
+    i_testClass = C_MoteurPap(v_rayonInit = 3)
     
     input("f_moveCm")
-    i_classTest.f_moveCm(4)
+    i_testClass.f_moveCm(4)
 
     input("fin de l'instance")
-    del i_classTest
+    del i_testClass
     
           
 if __name__ == '__main__':
