@@ -27,8 +27,9 @@ lexique
 """
 #################### Taille maximum des commentaires (80 caracteres)######################
 
-import moteurPap
-import ultrason
+from moteurPap import moteurPap
+from ultrason import ultrason
+from devChk.devChk import C_DebugMsg
 
 class C_choupyBot(object) :
     def __init__(self):
