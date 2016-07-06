@@ -2,82 +2,140 @@
 # -*- coding: utf-8 -*-
 
 """
+
+=========
+choupyBot
+=========
+
    :Nom du fichier:     choupyBot.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160612
+   :Version:            20160706
 
-----
+####
 
    :Licence:            CC-BY-NC-SA
    :Liens:              https://creativecommons.org/licenses/by-nc-sa/4.0/
 
-----
+####
+
+    :dev language:      Python 3.4
+    
+####
 
 lexique
--------
+=======
 
-   :v_:                 variable
-   :l_:                 list
-   :t_:                 tuple
-   :d_:                 dictionnaire
-   :f_:                 fonction
-   :C_:                 Class
-   :i_:                 Instance
-   :m_:                 Module
+   :**v_**:                 variable
+   :**l_**:                 list
+   :**t_**:                 tuple
+   :**d_**:                 dictionnaire
+   :**f_**:                 fonction
+   :**C_**:                 Class
+   :**i_**:                 Instance
+   :**m_**:                 Module
 """
-#################### Taille maximum des commentaires (80 caracteres)######################
 
 from moteurPap import moteurPap
-from ultrason import ultrason
+from ultrason.ultrason import C_ultrasonSensor
 from devChk.devChk import C_DebugMsg
 
 class C_choupyBot(object) :
     def __init__(self):
         """ variables globales """
         
-    def __del__(self) :
-        """destructor
+        ## Creation de l'instance de C_DebugMsg
+        self.i_dbg = C_DebugMsg()
         
+        
+    def __del__(self) :
+        """ Destructor
+        
+            Permet de fremer proprement l'instance en cours.
             il faut utilise :
             ::
             
                 del [nom_de_l'_instance]
+                
+            N.B : cette methode est appelee automatiquement par le ramasse miette si
+            l'instance n'est plus solicitee.
         """
         v_className = self.__class__.__name__
         print("\n\t\tL'instance de la class {} est terminee".format(c_className))
 
         
     def f_papInit(self):
-        """ initialisation des 2 moteur pas a pas """
-        self.i_PapGauche = C_MoteurPap(v_rotationInit = "antihorraire", v_rayonInit = 3)
-                                        # Le PAP Gauche doit tourner en sens inverse du droit 
-                                        # pour que le robot puisse aller tout droit
-        self.i_PapGauche.f_gpioInit(v_gpioA=06, v_gpioB=12, v_gpioC=13, v_gpioD=19)
-                                        # Initialisation des GPIO de chacun des moteur.
-                                        # i_PapGauche est initialiser avec les valeur par defaut
-                                        # (v_gpioA=17, v_gpioB=18, v_gpioC=27, v_gpioD=22)
+        """ initialisation des 2 moteur pas a pas (pap)
         
+            +------------+-------------------------+
+            | BCM (GPIO) | Serigraphie sur UNL2003 |
+            +============+=========================+
+            |   v_gpioA  |           N1            |
+            +------------+-------------------------+
+            |   v_gpioB  |           N2            |
+            +------------+-------------------------+
+            |   v_gpioC  |           N3            |
+            +------------+-------------------------+
+            |   v_gpioD  |           N4            |
+            +------------+-------------------------+
+           
+            le papGauche est intialiser sur les broches par defaut soit ::
+           
+                v_gpioA = GPIO17
+                v_gpioB = GPIO18
+                v_gpioC = GPIO27
+                v_gpioD = GPIO22
+           
+            et tourne dans le sens anti-horriare.
+            le papDroit est initialiser sur un autre jeux de broches ::
+           
+                v_gpioA = GPIO06
+                v_gpioB = GPIO12
+                v_gpioC = GPIO13
+                v_gpioD = GPIO19
+                
+            et tourne dans le sens horriare. La valeur de v_rayonInit correspond
+            au rayon des roues du robot. Les deux pap tournes en sens inverse l'un de 
+            l'aure, pour que le robot puisse aller tout droit.
+        """
+       
+        ## papGauche
+        self.i_papGauche = C_MoteurPap(v_rotationInit = "antihorraire", v_rayonInit = 3)
+        self.i_papGauche.f_gpioInit(v_gpioA=06, v_gpioB=12, v_gpioC=13, v_gpioD=19)
+        
+        ## papDroit
         self.i_PapDroit  = C_MoteurPap(v_rayonInit = 3)
         self.i_PapDroit.f_gpioInit()
 
                                         
-    def avance(self) :
+    def f_sonarInit(self) :
+        """ Initialisation du capteur ultrason
+
+        La broche du trig et configuer sur la broche 7 par défaut.
+        La broche echo ayant la broche 12 par defaut, elle a ete reconfiguree
+        sur la broche 5
+        """
+        
+        i_ultrason = C_ultrasonSensor()
+        i_ultrason.f_ultraInit(v_gpioEcho = 5)
+    
+    def f_avance(self) :
         """ avance tout droit """
         
-    def recul(self) :
+    def f_recul(self) :
         """ reculler tout droit """
         
-    def gauche(self) :
+    def f_gauche(self) :
         """ tourner a gauche """
         
-    def droite(self) :
+    def f_droite(self) :
         """ Tourner a droite """
 
 def main() :
     """ Fonction principal """
     i_choupy = C_choupyBot()
     i_choupy.f_papInit()
-    ultrason.f_ultraInit(v_gpioEcho = 5)
+    i_choupy.f_sonarInit()
+
     
     
 if __name__ == '__main__':
