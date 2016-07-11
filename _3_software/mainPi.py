@@ -9,7 +9,7 @@ choupyBot
 
    :Nom du fichier:     choupyBot.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160706
+   :Version:            20160711
 
 ####
 
@@ -40,11 +40,16 @@ from ultrason.ultrason import C_ultrasonSensor
 from devChk.devChk import C_DebugMsg
 
 class C_choupyBot(object) :
-    def __init__(self):
+    def __init__(self, ):
         """ variables globales """
         
         ## Creation de l'instance de C_DebugMsg
         self.i_dbg = C_DebugMsg()
+        
+        ## Variables globales
+        self.v_case = 15
+        self.v_mode = ""
+        
         
         
     def __del__(self) :
@@ -62,6 +67,21 @@ class C_choupyBot(object) :
         v_className = self.__class__.__name__
         print("\n\t\tL'instance de la class {} est terminee".format(c_className))
 
+        
+    def f_setMode(self, v_mode = "boxxle") :
+        """ identification / modification du mode de fonctionnement du robot
+        
+            Le Robot peut être parametrer pour fonctionner selon plusieur mode.
+            
+            **Les modes disponibles sont :**
+            
+                * Boxxle (mode par defaut)
+                * Parcours
+                * Aventure
+        """
+        if v_mode == "boxxle" or v_mode == "parcours" or v_mode == "aventure"
+            self.v_mode = v_mode
+        else : self.v_mode = "boxxle"
         
     def f_papInit(self):
         """ initialisation des 2 moteur pas a pas (pap)

@@ -9,7 +9,7 @@ choupyBot
 
 ------------------------------------------------------------------------------------------
 
-    :Version:           20160706
+    :Version:           20160711
 
 ------------------------------------------------------------------------------------------
 
@@ -17,12 +17,13 @@ Description
 ===========
 
 ChoupyBot est un petit "robot" animé par un Raspberry pi et motoriser par 2 moteur
-pas à pas (PAP). Un capteur ultrason ainsi qu'un ensemble de capteur infrarouge complète
-son équipement de base.
+pas à pas (PAP) et un capteur ultrason.
 
-L'object de ce projet et de réalisé une petite plateform ludique qui pourra être
-programmée à distance par un enfant. Ce robot evoluera dans un cadrillage de 10x10.
-N.B : la dimension des case sera determié ultérieurement en fonction de la taille du robot.
+L'objet de ce projet et de réalisé une petite plateforme ludique qui pourra être
+programmée à distance par un enfant. Ce robot évoluera dans un quadrillage de 15x15.
+
+**N.B :** la dimension des cases sera déterminée ultérieurement en fonction
+de la taille du robot.
 
 ------------------------------------------------------------------------------------------
 
@@ -31,47 +32,47 @@ Descriptif détaillé
 
     #. Liste des équipements
         * Un capteur ultrason
-            Il vat permetre la détection des obstables. Un potentiomettre sera associé
+            Il vat permettre la détection des obstacles. Un potentiomètre sera associé
             à ce capteur pour permettre de modifier la distance de sécurité avant
-            évitement des obstacles.
-            
-        * Un Servo moteur
-            pour manipuller le capteur ultrason (Pas obligatoire).
-            
-        * Des emeteurs recepteurs infrarouge
-            Ils vont permettre de detecter les bords de table pour prévenir des chutes.
-            Ils devront également être capable de suivre une ligne tracé au sols.
-            Pour aider la programation et le degugage, des LED CMS seront placées
-            à coté de chaque capteur.
+            Évitement des obstacles.
             
         * Un bouton "Start"
-            Lorsque la programation du robot par l'utilisateur sera terminé,
+            Lorsque la programmation du robot par l'utilisateur sera terminé,
             le robot attendra que le bouton "Start" soit enfoncé avant de commencer.
             Des LED peuvent être placés à coté pour indiquer si on est en mode Action
             ou Programmation
             
-            **N.B** : Si le bouton n'est pas physique mais fait parti de l'interface,
-            il ne sera pas necessaire d'ajouter les LED.
+            **N.B** : Si le bouton n'est pas physique mais fait partie de l'interface,
+            il ne sera pas nécessaire d'ajouter les LED.
             
-    #. Liste des fonctionalités
-        * Suiveur de lignes
-            - Il doit pouvoir suivre une ligne noir d'une épaisseur de 25 mm minimum.
-            - En cas d'obstacle sur le parcour il doit pouvoir se détourner de son chemin
-              et pouvoir le récupérer plus loin
-        
-        * Se déplacer sur un dammier
-            - Il doit être capable de se déplacer très précésement
+    #. Les modes disponibles sont
+    
+        * **Boxxle** : Le robot doit manipuler une boite sur un damier a fin de la
+          ranger sur un emplacement défini en évitant les obstacles. Les
+          Instructions seront données par un opérateur depuis un terminal externe.
+          
+        * **Parcours** : Le robot doit suivre un parcours (ou un labyrinthe).
+          Lorsque le robot aura suivi le parcours ou résolue le labyrinthe, le
+          robot pourra refaire le trajet de façon optimisé.
+          
+        * **Aventure** : le robot évolue librement au sol et réagi en fonction des
+          obstacles qu'il rencontre.
+            
+
+        * Se déplacer sur un damier
+            - Il doit être capable de se déplacer très précisément
               à fin de ne pas dépasser les limites d'une case
-            - on peut imaginé que le robot devrat positionner un objet sur une case précise
-              en contournant les obstacles posé sur le plateau.
-              
-    #. Besoin et fonctionnalités pour la "programation" coté publique
-        * Création d'un programe et d'un interface pour tablettes Android
+               
+    #. Besoin et fonctionnalités pour la "programmation" coté publique
+        * Création d'un programme et d'un interface pour tablettes Android
             - 4 boutons de base : Avance, Recul, Gauche, Droite
+            - 1 menu déroulant permettant de choisir le mode disponible : Boxxle, Parcours,
+              Aventure.
+            - 1 pair de bouton radio Start / Stop
 
 ------------------------------------------------------------------------------------------
 
-Références materiels
+Références matériels
 ====================
 
     :reference du moteur Pas a Pas:         28BJY-48
