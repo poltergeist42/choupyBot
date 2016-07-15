@@ -2,14 +2,23 @@
 choupyBot
 =========
 
-   :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Projet:             choupyBot
-   :Licence:            CC BY-NC-SA 4.0
-   :Liens:              https://creativecommons.org/licenses/by-nc-sa/4.0/ 
+   :Autheur:                    `Poltergeist42 <https://github.com/poltergeist42>`_
+   :Projet:                     choupyBot
+   :Licence:                    CC BY-NC-SA 4.0
+   :Liens:                      https://creativecommons.org/licenses/by-nc-sa/4.0/ 
 
 ------------------------------------------------------------------------------------------
 
-    :Version:           20160711
+    :Version:                   20160715
+
+------------------------------------------------------------------------------------------
+
+Outils de conception
+=======================
+
+    :Langage de programmation:  Python (v3.4)
+    :modelisation 3D:           Fusion 360
+    :Circuit imprime:           Kicad (v4.0.2)
 
 ------------------------------------------------------------------------------------------
 
