@@ -3,7 +3,8 @@ choupyBot
 =========
 
    :Autheur:          `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Projet:           choupyBot
+   :Organistation:    `VoLAB <https://github.com/volab>`_
+   :Projet:           `choupyBot <https://github.com/volab/choupyBot>`_
    :Licence:          CC BY-NC-SA 4.0
    :Liens:            https://creativecommons.org/licenses/by-nc-sa/4.0/ 
 
@@ -12,14 +13,15 @@ choupyBot
 Description
 ===========
 
-ChoupyBot est un petit "robot" animé par un Raspberry pi et motoriser par 2 moteur
-pas à pas (PAP). Un capteur ultrason ainsi qu'un ensemble de capteur infrarouge complète
-son équipement de base.
+ChoupyBot est un petit "robot" animé par un Raspberry pi et motoriser par 2 moteurs
+pas à pas (PAP) et un capteur ultrason.
 
-L'object de ce projet et de réalisé une petite plateform ludique qui pourra être
-programmée à distance par un enfant. Ce robot evoluera dans un cadrillage de 10x10.
-N.B : la dimension des case sera determié ultérieurement en fonction de la taille du robot.
+L'objectif de ce projet et de réaliser une petite plateforme ludique qui pourra être
+programmée / commandée à distance par un enfant. Ce robot évoluera dans un quadrillage
+de 15x15.
 
-    :reference du moteur Pas a Pas:         28BJY-48
-    :reference du driver pour le PAP:       UNL2003
-    :reference du capteur ultrason:         HC-SR04
+**N.B :** la dimension des cases sera déterminée ultérieurement en fonction
+de la taille du robot.
+
+Voir le doc de conception pour plus de détail :
+https://github.com/volab/choupyBot/blob/master/_1_userDoc/choupyBot_doc.rst
