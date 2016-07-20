@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name XH_connector)(type KiCad)(uri "$(KIPRJMOD)\\XH_connector.pretty")(options "")(descr ""))
+)

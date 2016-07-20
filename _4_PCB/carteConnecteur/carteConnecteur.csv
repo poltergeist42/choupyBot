@@ -1,0 +1,17 @@
+"Id";"Référence";"Boîtier";"Quantité";"Désignation";"Fournisseur et réf.";
+1;"D1";"LED-5MM";1;"LED";;;
+2;"P6";"Pin_Header_Straight_2x20";1;"RPi_Conn";;;
+3;"P10";"Pin_Header_Straight_1x02";1;"N.U";;;
+4;"R1";"Resistor_Vertical_RM5mm";1;"20k";;;
+5;"R2";"Resistor_Vertical_RM5mm";1;"10k";;;
+6;"R3";"Resistor_Vertical_RM5mm";1;"330R";;;
+7;"P11";"Pin_Header_Straight_1x03";1;"I2c";;;
+8;"REF**,REF**";"MountingHole_3.7mm_Pad";2;"MountingHole_3.7mm_Pad";;;
+9;"P1";"Pin_Header_Straight_1x02";1;"+5 (ubec)";;;
+10;"P2";"XH_connector_4pins_Vert";1;"PAP_D";;;
+11;"P3";"XH_connector_2pins_Vert";1;"+5 (pap_G)";;;
+12;"P4";"XH_connector_2pins_Vert";1;"+5 (pap_D)";;;
+13;"P5";"XH_connector_4pins_Vert";1;"PAP_G";;;
+14;"P7";"XH_connector_2pins_Vert";1;"+5 (sonar)";;;
+15;"P8";"XH_connector_2pins_Vert";1;"+5 (RPi)";;;
+16;"P9";"XH_connector_4pins_Vert";1;"HC-SR04";;;

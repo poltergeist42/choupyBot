@@ -9,7 +9,7 @@ choupyBot
 
    :Nom du fichier:     choupyBot.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160711
+   :Version:            20160718
 
 ####
 
@@ -98,7 +98,7 @@ class C_choupyBot(object) :
             |   v_gpioD  |           N4            |
             +------------+-------------------------+
            
-            le papGauche est intialiser sur les broches par defaut soit ::
+            le papGauche est intialiser sur les GPIO par defaut soit ::
            
                 v_gpioA = GPIO17
                 v_gpioB = GPIO18
@@ -106,7 +106,7 @@ class C_choupyBot(object) :
                 v_gpioD = GPIO22
            
             et tourne dans le sens anti-horriare.
-            le papDroit est initialiser sur un autre jeux de broches ::
+            le papDroit est initialiser sur un autre jeux de GPIO ::
            
                 v_gpioA = GPIO06
                 v_gpioB = GPIO12
@@ -130,9 +130,9 @@ class C_choupyBot(object) :
     def f_sonarInit(self) :
         """ Initialisation du capteur ultrason
 
-        La broche du trig et configuer sur la broche 7 par défaut.
-        La broche echo ayant la broche 12 par defaut, elle a ete reconfiguree
-        sur la broche 5
+        La broche du trig et configuer sur GPIO 7 par défaut.
+        La broche echo ayant le GPIO 12 par defaut, elle a ete reconfiguree
+        sur GPIO 5
         """
         
         i_ultrason = C_ultrasonSensor()
