@@ -47,6 +47,8 @@ Descriptif détaillé
             à ce capteur pour permettre de modifier la distance de sécurité avant
             Évitement des obstacles.
             
+            *N.B :* Le potentiomètre n'étant pas indispençable, il peut être homis.
+            
         * Un bouton "Start"
             Lorsque la programmation du robot par l'utilisateur sera terminé,
             le robot attendra que le bouton "Start" soit enfoncé avant de commencer.
@@ -75,7 +77,7 @@ Descriptif détaillé
               à fin de ne pas dépasser les limites d'une case
                
     #. Besoin et fonctionnalités pour la "programmation" coté publique
-        * Création d'un programme et d'un interface pour tablettes Android
+        * Création d'un programme et d'un interface pour tablettes Android et / ou PC
             - 4 boutons de base : Avance, Recul, Gauche, Droite
             - 1 menu déroulant permettant de choisir le mode disponible : Boxxle, Parcours,
               Aventure.
@@ -90,7 +92,11 @@ Références matériels
     :reference du driver pour le PAP:       UNL2003
     :reference du capteur ultrason:         HC-SR04
     :reference du Raspberry Pi:             Raspberry Pi2
-    :reference pour la carte electronique:
+    :reference Battery:                     Lipo Battery 7.4V
+    :reference abaisseur de tension:        UBEC 5v 3a
+    :reference electronique:
+        +------------------------------------------------------------------------------+
+        |                           Carte éléctronique                                 |
         +--------------------------+-----+---------------------------------------------+
         |          Référence       | QTE |                 Descriptif                  |
         +==========================+=====+=============================================+
@@ -120,6 +126,17 @@ Références matériels
         | Connector FC-40          |     | dimensions                                  |
         +--------------------------+-----+---------------------------------------------+
         
+        +------------------------------------------------------------------------------+
+        |                           Autres Composant                                   |
+        +--------------------------+-----+---------------------------------------------+
+        |          Référence       | QTE |                 Descriptif                  |
+        +==========================+=====+=============================================+
+        | Mini Digital Voltmeter   |  1  | Permet de mesurer la tension de la battery  |
+        +--------------------------+-----+---------------------------------------------+
+        | spdt toggle switch 2     |  1  | Switch Permettant la mise sous tension et   |
+        | position                 |     | la mise hors tension                        |
+        +--------------------------+-----+---------------------------------------------+
+        
     :ref fournisseur:
         * `Resistor <http://www.aliexpress.com/item/1Pack-300Pcs-10-1M-Ohm-1-4w-Resistance-1-Metal-Film-Resistor-Resistance-Assortment-Kit-Set/32505894332.html?spm=2114.30010308.3.1.85eorw&ws_ab_test=searchweb201556_0,searchweb201602_3_10057_10056_10055_10037_10049_10033_10059_10032_10058_10017_405_404_407_10040,searchweb201603_1&btsid=8e5d318c-a269-4c5b-a395-16bc8a31fc73>`_
         
@@ -140,4 +157,12 @@ Références matériels
         * `HC-SR04 Ultrasonic <http://www.aliexpress.com/item/5pcs-HC-SR04-Ultrasonic-Module-Distance-Measuring-Transducer-Sensor-Detector-Ranging-Module-DC-5V/1787674353.html?spm=2114.30010308.3.1.CF7FU0&ws_ab_test=searchweb201556_0,searchweb201602_3_10057_10056_10055_10037_10049_10033_10059_10032_10058_10017_405_404_407_10040,searchweb201603_1&btsid=fbf652a2-1388-4059-8230-f07c7a479e81>`_
 
         * `Raspberry Pi 3 (le 2 est épuisé) <http://www.rs-particuliers.com/WebCatalog/Raspberry_Pi_Model_3_B_SBC-8968660.aspx>`_
+        
+        * `Lipo Battery 7.4V <http://www.aliexpress.com/item/New-Lion-Power-Lipo-Battery-7-4V-2S-900Mah-25C-High-Power-For-RC-Helicopter-Quadcopter/32490119056.html?spm=2114.30010308.3.200.L5R1oe&ws_ab_test=searchweb201556_0,searchweb201602_3_10057_10056_10055_10037_10049_10033_10059_10032_10058_10017_405_404_407_10040,searchweb201603_1&btsid=5df62305-c0ef-4954-b372-49875b600234>`_
+        
+        * `UBEC <http://www.aliexpress.com/item/DC-Converter-Module-3A-5V-Mini-UBEC-For-RC-Plane-Quadcopter-UBEC-For-FPV-Image-Transmission/32672871968.html?spm=2114.30010308.3.126.czjaXj&ws_ab_test=searchweb201556_0,searchweb201602_3_10057_10056_10055_10037_10049_10033_10059_10032_10058_10017_405_404_407_10040,searchweb201603_1&btsid=782431b5-bf7c-4989-af00-d58d274b1460>`_
+        
+        * `Mini Digital Voltmeter <http://www.banggood.com/0_28-Inch-2_5V-30V-Mini-Digital-Voltmeter-p-974258.html>`_
+        
+        * `spdt toggle switch <http://www.aliexpress.com/item/2-Pcs-AC-125V-6A-Amps-ON-ON-2-Position-3-Pins-SPDT-Mini-Toggle-Switch/32616445190.html?spm=2114.30010308.3.292.Cuv17y&ws_ab_test=searchweb201556_0,searchweb201602_3_10057_10056_10055_10037_10049_10033_10059_10032_10058_10017_405_404_407_10040,searchweb201603_1&btsid=3ba9a450-a00f-4e04-ab23-c6719cd05a1d>`_
         
