@@ -10,7 +10,7 @@ choupyBot
 
 ------------------------------------------------------------------------------------------
 
-    :Version:                   20160720
+    :Version:                   20160721
 
 ------------------------------------------------------------------------------------------
 
@@ -47,7 +47,8 @@ Descriptif détaillé
             à ce capteur pour permettre de modifier la distance de sécurité avant
             Évitement des obstacles.
             
-            *N.B :* Le potentiomètre n'étant pas indispençable, il peut être homis.
+            **N.B :** Le RPi n'étant pas équiper d'une entrée analogique et ne voulant
+            ajouter un CAN, le potentiomètre ne sera pas intégré pour l'instant.
             
         * Un bouton "Start"
             Lorsque la programmation du robot par l'utilisateur sera terminé,
@@ -70,18 +71,21 @@ Descriptif détaillé
           
         * **Aventure** : le robot évolue librement au sol et réagi en fonction des
           obstacles qu'il rencontre.
+          
+          **N.B** : Le Robot n'ayant qu'un seul capteur, ce dernier ne réagira
+          pas beaucoup.
             
-
-        * Se déplacer sur un damier
-            - Il doit être capable de se déplacer très précisément
-              à fin de ne pas dépasser les limites d'une case
-               
     #. Besoin et fonctionnalités pour la "programmation" coté publique
         * Création d'un programme et d'un interface pour tablettes Android et / ou PC
             - 4 boutons de base : Avance, Recul, Gauche, Droite
             - 1 menu déroulant permettant de choisir le mode disponible : Boxxle, Parcours,
               Aventure.
             - 1 paire de bouton radio Start / Stop
+            
+        * Arrêt du système
+            - L'interface doit contenir un onglet ; une page ; ou un bouton permettant
+              d'éteindre le RPi. Une foie le système arréter, un message doit nous
+              informer que l'appareil peut être mis hors tension.
 
 ------------------------------------------------------------------------------------------
 
