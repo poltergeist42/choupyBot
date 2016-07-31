@@ -9,7 +9,7 @@ choupyBot
 
    :Nom du fichier:     choupyBot.py
    :Autheur:            `Poltergeist42 <https://github.com/poltergeist42>`_
-   :Version:            20160718
+   :Version:            20160731
 
 ####
 
@@ -34,10 +34,25 @@ lexique
    :**i_**:                 Instance
    :**m_**:                 Module
 """
+try :
+    from moteurPap.moteurPap import C_MoteurPap
+except ImportError :
+    print( "module 'moteurPap' non charge") 
 
-from moteurPap import moteurPap
-from ultrason.ultrason import C_ultrasonSensor
-from devChk.devChk import C_DebugMsg
+try :
+    from ultrason.ultrason import C_ultrasonSensor
+except ImportError :
+    print( "module 'ultrason' non charge")
+    
+try :
+    from devChk.devChk import C_DebugMsg
+except ImportError :
+    print( "module 'devChk' non charge")
+    
+try :
+    from objJson.objJson import C_ObjJson
+except ImportError :
+    print( "module 'objJson' non charge")
 
 class C_choupyBot(object) :
     def __init__(self, ):
